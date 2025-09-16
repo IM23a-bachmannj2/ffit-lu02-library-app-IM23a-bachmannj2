@@ -1,4 +1,4 @@
-package ch.bzz;
+package ch.bzz.model;
 
 public class Book {
     private int id;
