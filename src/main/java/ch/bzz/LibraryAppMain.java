@@ -121,7 +121,7 @@ public class LibraryAppMain {
             input = myObj.nextLine();
 
             if ("help".equals(input)) {
-                System.out.println("Verfügbare Befehle: help, quit, listBooks");
+                System.out.println("Verfügbare Befehle: help, quit, listBooks, importBooks");
             } else if ("listBooks".equals(input)) {
                 List<Book> books = getAllBooks();
                 for (Book book : books) {
