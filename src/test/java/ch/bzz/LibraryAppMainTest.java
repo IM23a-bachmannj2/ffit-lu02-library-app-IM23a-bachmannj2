@@ -19,7 +19,7 @@ class LibraryAppMainTest {
         prepareStreams("quit\n");
 
         // Act & Assert
-        assertDoesNotThrow(() -> LibraryAppMain.main(new String[]{}),
+        assertDoesNotThrow(() -> LibraryAppMain.main(new String[] {}),
                 "Program should terminate cleanly without throwing an exception");
     }
 
@@ -29,7 +29,7 @@ class LibraryAppMainTest {
         var outStream = prepareStreams("foobar\nquit\n");
 
         // Act
-        LibraryAppMain.main(new String[]{});
+        LibraryAppMain.main(new String[] {});
 
         // Assert
         var consoleOutput = outStream.toString();
@@ -43,7 +43,7 @@ class LibraryAppMainTest {
         var outStream = prepareStreams("help\nquit\n");
 
         // Act
-        LibraryAppMain.main(new String[]{});
+        LibraryAppMain.main(new String[] {});
 
         // Assert
         var consoleOutput = outStream.toString();
@@ -59,7 +59,7 @@ class LibraryAppMainTest {
         var out = prepareStreams("listBooks\nquit\n");
 
         // Act
-        LibraryAppMain.main(new String[]{});
+        LibraryAppMain.main(new String[] {});
 
         // Assert
         var output = out.toString();
@@ -76,7 +76,7 @@ class LibraryAppMainTest {
         var out = prepareStreams("importBooks " + filePath + "\nlistBooks\nquit\n");
 
         // Act
-        LibraryAppMain.main(new String[]{});
+        LibraryAppMain.main(new String[] {});
 
         // Assert
         String output = out.toString();
@@ -85,7 +85,6 @@ class LibraryAppMainTest {
         assertTrue(output.contains("Refactoring"), "Output should contain imported book title");
         assertTrue(output.contains("Clean Architecture"), "Output should contain imported book title");
     }
-
 
     private ByteArrayOutputStream prepareStreams(String input) {
         var in = new ByteArrayInputStream(input.getBytes());

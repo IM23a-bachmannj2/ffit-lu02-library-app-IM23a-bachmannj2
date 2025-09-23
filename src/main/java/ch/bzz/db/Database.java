@@ -7,7 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Database {
+    private static final Logger log = LoggerFactory.getLogger(Database.class);
 
     private static String URL;
     private static String USER;
@@ -25,7 +29,7 @@ public class Database {
             PASSWORD = dbProps.getProperty("PASSWORD");
 
         } catch (IOException | NullPointerException e) {
-            System.err.println("Failed to load database configuration: " + e.getMessage());
+            log.error("Failed to load database configuration: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -34,7 +38,7 @@ public class Database {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            System.err.println("Database connection failed: " + e.getMessage());
+            log.error("Database connection failed: " + e.getMessage());
             e.printStackTrace();
             return null;
         }

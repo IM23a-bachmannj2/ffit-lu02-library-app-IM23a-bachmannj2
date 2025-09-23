@@ -6,11 +6,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ch.bzz.model.Book;
 import ch.bzz.db.Database;
 import java.sql.Statement;
 
 public class GetBooks {
+    private static final Logger log = LoggerFactory.getLogger(GetBooks.class);
+
     public static List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
 
@@ -32,7 +37,7 @@ public class GetBooks {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Failed to SELECT books from Database", e);
         }
 
         return books;

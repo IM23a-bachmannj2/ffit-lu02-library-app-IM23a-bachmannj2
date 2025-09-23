@@ -9,7 +9,11 @@ import ch.bzz.io.GetBooks;
 import ch.bzz.io.ImportTsv;
 import ch.bzz.db.InsertBooks;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class LibraryAppMain {
+    private static final Logger log = LoggerFactory.getLogger(LibraryAppMain.class);
 
     public static void main(String[] args) {
         Scanner myObj = new Scanner(System.in);
@@ -35,9 +39,11 @@ public class LibraryAppMain {
                     String filePath = parts[1];
                     List<Book> books = ImportTsv.importBooks(filePath);
                     InsertBooks.insertBooksintoDB(books);
+                    log.info(books.size() + " Bücher importiert.");
                     System.out.println(books.size() + " Bücher importiert.");
                 }
             } else if (!Arrays.asList(commands).contains(input)) {
+                log.info(input + " Eingabe nicht als Befehl erkannt");
                 System.out.println(input + " Eingabe nicht als Befehl erkannt");
             }
         }
