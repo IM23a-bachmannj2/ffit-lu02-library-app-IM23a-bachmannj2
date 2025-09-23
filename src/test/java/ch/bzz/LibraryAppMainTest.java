@@ -73,7 +73,7 @@ class LibraryAppMainTest {
         var out = prepareStreams("listBooks 1\nquit\n");
 
         // Act
-        LibraryAppMain.main(new String[]{});
+        LibraryAppMain.main(new String[] {});
 
         // Assert
         var output = out.toString();
@@ -87,13 +87,12 @@ class LibraryAppMainTest {
         var out = prepareStreams("listBooks SEVEN\nquit\n");
 
         // Act + Assert
-        assertDoesNotThrow(() -> LibraryAppMain.main(new String[]{}),
+        assertDoesNotThrow(() -> LibraryAppMain.main(new String[] {}),
                 "Invalid numeric input should not throw an exception");
 
         var output = out.toString();
         assertFalse(output.isEmpty(), "Output should indicate that the argument could not be parsed");
     }
-
 
     @Test
     void testImportBooksImportsFromCsv() throws URISyntaxException {
@@ -114,7 +113,6 @@ class LibraryAppMainTest {
         assertFalse(output.contains("Clean Architecture"), "Output should not contain imported book title with id=4");
     }
 
-
     @Test
     void testImportBooksWithInvalidFileDoesNotThrow() throws URISyntaxException {
         // Arrange
@@ -124,7 +122,7 @@ class LibraryAppMainTest {
         var out = prepareStreams("importBooks " + filePath + "\nquit\n");
 
         // Act + Assert
-        assertDoesNotThrow(() -> LibraryAppMain.main(new String[]{}),
+        assertDoesNotThrow(() -> LibraryAppMain.main(new String[] {}),
                 "Invalid file path should not throw an exception");
 
         var output = out.toString();

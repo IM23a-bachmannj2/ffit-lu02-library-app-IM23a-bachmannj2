@@ -26,10 +26,26 @@ public class LibraryAppMain {
 
             if ("help".equals(input)) {
                 System.out.println("Verfügbare Befehle: help, quit, listBooks, importBooks");
-            } else if ("listBooks".equals(input)) {
-                List<Book> books = GetBooks.getAllBooks();
-                for (Book book : books) {
-                    System.out.println(book);
+            } else if (input.startsWith("listBooks")) {
+                String[] parts = input.split(" ", 2);
+                if (parts.length < 2) {
+                    List<Book> books = GetBooks.getAllBooks();
+                    for (Book book : books) {
+                        System.out.println(book);
+                    }
+                } else {
+                    String countStr = parts[1];
+                    try {
+                        Integer countInt = Integer.parseInt(countStr);
+                        List<Book> books = GetBooks.getBooks(countInt);
+
+                        for (Book book : books) {
+                            System.out.println(book);
+                        }
+                    } catch (NumberFormatException e) {
+                        log.error("Failed to convert '{}' to int", input, e);
+                        continue;
+                    }
                 }
             } else if (input.startsWith("importBooks")) {
                 String[] parts = input.split(" ", 2);
@@ -38,9 +54,15 @@ public class LibraryAppMain {
                 } else {
                     String filePath = parts[1];
                     List<Book> books = ImportTsv.importBooks(filePath);
-                    InsertBooks.insertBooksintoDB(books);
-                    log.info(books.size() + " Bücher importiert.");
-                    System.out.println(books.size() + " Bücher importiert.");
+
+                    String message = books.size() + " Bücher aus Datei gelesen.";
+                    log.info(message);
+                    System.out.println(message);
+
+                    int count = InsertBooks.insertBooksintoDB(books);
+                    message = count + " Bücher in Datenbank gespeichert.";
+                    log.info(message);
+                    System.out.println(message);
                 }
             } else if (!Arrays.asList(commands).contains(input)) {
                 log.info(input + " Eingabe nicht als Befehl erkannt");

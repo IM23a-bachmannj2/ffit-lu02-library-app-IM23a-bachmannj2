@@ -4,6 +4,7 @@ import ch.bzz.model.Book;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -34,14 +35,15 @@ public class InsertBooks {
                 pstmt.setString(4, book.getAuthor());
                 pstmt.setInt(5, book.getPublicationYear());
 
-                pstmt.executeUpdate();
+                pstmt.addBatch();
                 count++;
             }
+            var changedRows = pstmt.executeBatch();
+            log.info(Arrays.toString(changedRows));
 
         } catch (SQLException e) {
             log.error("Failed to insert books", e);
         }
-
         return count;
     }
 }
